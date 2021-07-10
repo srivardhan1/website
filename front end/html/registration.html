@@ -5,35 +5,94 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>site</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link href="/css/registration.css" rel="stylesheet" type="text/css">
     <script type="text/javascript">
     function fn1()
     {
-    var str1=document.getElementById("name").value;
-    var str2=document.getElementById("pwd").value;
-    if(str1==str2){
-        alert("Your username and password are: "+str1);
+        console.log("hi");
+        var userObject={};
+        userObject.firstname = $("#name").val();
+        userObject.lastname = $("#lname").val();
+        userObject.password = $("#pwd").val();
+        userObject.conformpassword = $("#cnfmpwd").val();
+        userObject.companyname = $("#cname").val();
+        userObject.email = $("#email").val();
+        userObject.phone = $("#phn").val();
+        console.log(userObject.phone);
+        $.ajax({
+        url: "/regis",
+        type: "POST",
+        data: userObject,
+        success: function(data) {
+          //console.log(JSON.stringify(data));
+          if(data.message=="Email Id already registered"){
+            toastr.error(data.message, 'Failed');
+          }
+          else{
+            toastr.success( 'Registered successfully');
+          }
+        }
+    })
+    // var str1=document.getElementById("name").value;
+    // var str2=document.getElementById("pwd").value;
+    // if(str1==str2){
+        // alert("Your username and password are: "+str1);
     }
-    else{
-        alert("Your username is: "+str1+" Your password is: "+str2);
-    }
-}
+    // else{
+        // alert("Your username is: "+str1+" Your password is: "+str2);
+    // }
+//}
 
     </script>
 </head>
 <body>
-    <label for="email"><b>Email</b></label>
-    <input id="name" placeholder="username">
+    <div class="sign-up-form">
+    <h1>Sign Up Now</h1>
+    <form>
+    <label for="First name"><b>First name</b></label><br/>
+    <input id="name" class="input" placeholder="First Name">
     <br/><br/>
-    <input type="date" id="dob" placeholder="Date of birth">
+    <label for="Last name"><b>Last name</b></label><br/>
+    <input type="name" id="lname" class="input" placeholder="Last name">
     <br/><br/>
-    <input type="password" id="pwd" placeholder="password">
+    <label for="Email"><b>Email address</b></label><br/>
+    <input type="email" id="email" class="input" placeholder="Email address">
     <br/><br/>
-    <input type="password" id="cnfmpwd" placeholder="Conform password">
+    <label for="Company"><b>Company name</b></label><br/>
+    <input type="name" id="cname" class="input" placeholder="Company name">
     <br/><br/>
-    <input type="phone" id="phn" placeholder="phone number">
-    <br/><br/>
+    <!-- <label for="Role"><b>Role</b></label><br/> -->
+    <!-- <input type="name" id="role" placeholder="role"> -->
+    <!-- <select name="Role" id="role">
+        <option value="agency/partner developer">Agency/Partner developer</option>
+        <option value="hobbyist">Hobbyist</option>
+        <option value="professional developer">Professional developer</option>
+        <option value="student">Student</option>
+        <option value="technology/business manager">Technology/Business Manager</option>
+        <option value="other">Other</option>
+      </select> -->
+      <br><br>
 
 
-    <button onclick="fn1()">Click me</button>
+    <label for="password"><b>password</b></label><br/>
+    <input type="password" id="pwd" class="input" placeholder="password">
+    <br/><br/>
+    <label for="cnfmpwd"><b>Conform password</b></label><br/>
+    <input type="password" id="cnfmpwd" class="input" placeholder="Conform password">
+    <br/><br/>
+    <label for="phone"><b>phone number</b></label><br/>
+    <input type="phone" id="phn" class="input" placeholder="phone number">
+    <br/><br/>
+    <p><span><input type="checkbox"></span>I agree to the terms and conditions</p>
+<button type="submit"  onclick="fn1()" class="signup-btn">Sign Up</button>
+<hr>
+<p class="or">OR</p>
+<p>Already have an account?<a href="#">Sign in</a></p>
+</form>
+</div>
+
+
+    <!-- <button onclick="fn1()">Submit</button> -->
 </body>
 </html>

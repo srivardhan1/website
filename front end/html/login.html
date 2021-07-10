@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>site</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link href="/css/login.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="sign-in-form">
+    <h1>Login Here</h1>
+    <form>
+    
+    <label for="Email"><b>Email address</b></label><br/>
+    <input type="email" id="email" class="input" placeholder="Email address">
+    <br/><br/>
+
+
+    <label for="password"><b>password</b></label><br/>
+    <input type="password" id="pwd" class="input" placeholder="password">
+    <br/><br/>
+<button type="submit" id="btn" class="signin-btn">Login</button>
+<hr>
+</form>
+</div>
+ <!-- <button onclick="fn1()">Submit</button> -->
+</body>
+<script>
+    $("#btn").on('click', function(e){
+    e.preventDefault();
+    e.stopPropagation(); 
+
+        var userObject={};
+        userObject.email = $("#email").val();
+        userObject.password = $("#pwd").val();
+        console.log(userObject);
+        $.ajax({
+        url: "/log",
+        type: "POST",
+        data: userObject,
+        success: function(data) {
+            console.log("entered");
+          //console.log(JSON.stringify(data));
+          if(data.message=="Email Id not Found,Try again"){
+            //toastr.error(data.message, 'Failed');
+          }
+          else{
+            //toastr.success( 'Loggedin successfully');
+          }
+        }
+    })
+    // var str1=document.getElementById("name").value;
+    // var str2=document.getElementById("pwd").value;
+    // if(str1==str2){
+        // alert("Your username and password are: "+str1);
+    })
+</script>
+</html>
